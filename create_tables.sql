@@ -104,7 +104,9 @@ CREATE TABLE CUSTOMER (
     email VARCHAR(255) UNIQUE,
     password_hash VARCHAR(255),
     phone VARCHAR(50),
-    created_at DATE
+    created_at DATE,
+    email_verified BOOLEAN DEFAULT FALSE,
+    last_login_at TIMESTAMP
 );
 
 CREATE TABLE CATEGORY (
@@ -146,7 +148,7 @@ CREATE TABLE PRODUCT_IMAGE (
 );
 
 CREATE TABLE CUSTOMER_ADDRESS (
-    address_id INT PRIMARY KEY,
+    address_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     customer_id INT,
     house_number VARCHAR(100),
     building VARCHAR(255),

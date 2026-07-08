@@ -1,0 +1,8 @@
+CREATE OR REPLACE FUNCTION get_customer_addresses(
+    p_customer_id INT
+) RETURNS SETOF CUSTOMER_ADDRESS AS $$
+BEGIN
+RETURN QUERY
+SELECT * FROM CUSTOMER_ADDRESS WHERE customer_id = p_customer_id;
+END;
+$$ LANGUAGE plpgsql;
