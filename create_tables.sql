@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS ORDER_ITEM_CUSTOM_CAKE CASCADE;
 DROP TABLE IF EXISTS ORDER_ITEM CASCADE;
 DROP TABLE IF EXISTS PAYMENT CASCADE;
 DROP TABLE IF EXISTS DELIVERY CASCADE;
-DROP TABLE IF EXISTS "ORDER" CASCADE;
+DROP TABLE IF EXISTS "CUSTOMER_ORDER" CASCADE;
 DROP TABLE IF EXISTS PRODUCT CASCADE;
 DROP TABLE IF EXISTS CATEGORY CASCADE;
 DROP TABLE IF EXISTS BRANCH CASCADE;
@@ -39,90 +39,90 @@ DROP TABLE IF EXISTS CAKE_SHAPE CASCADE;
 
 CREATE TABLE CAKE_SHAPE (
     cake_shape_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    price DECIMAL(10, 2)
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE CAKE_SIZE (
     size_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    diameter INT,
-    servings INT,
-    price_modifier DECIMAL(10, 2)
+    name VARCHAR(255) NOT NULL,
+    diameter INT NOT NULL,
+    servings INT NOT NULL,
+    price_modifier DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE DECORATION (
     decoration_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    price DECIMAL(10, 2)
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE ADDON (
     addon_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    price DECIMAL(10, 2)
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE CAKE_BASE (
     base_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    price DECIMAL(10, 2)
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE FROSTING (
     frosting_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    price DECIMAL(10, 2)
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE ALLERGEN (
     allergen_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    description VARCHAR(255)
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE INGREDIENT (
     ingredient_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    unit_of_measure VARCHAR(50),
-    is_active BOOLEAN
+    name VARCHAR(255) NOT NULL,
+    unit_of_measure VARCHAR(50) NOT NULL,
+    is_active BOOLEAN NOT NULL
 );
 
 CREATE TABLE SUPPLIER (
     supplier_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    contact_name VARCHAR(255),
-    phone VARCHAR(50),
-    email VARCHAR(255),
-    address VARCHAR(255)
+    name VARCHAR(255) NOT NULL,
+    contact_name VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE CUSTOMER (
     customer_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    password_hash VARCHAR(255),
-    phone VARCHAR(50),
-    created_at DATE,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    created_at DATE NOT NULL,
     email_verified BOOLEAN DEFAULT FALSE,
-    last_login_at TIMESTAMP
+    last_login_at TIMESTAMP NOT NULL
 );
 
 CREATE TABLE CATEGORY (
     category_id INT PRIMARY KEY,
-    name VARCHAR(255)
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE BRANCH (
     branch_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    address VARCHAR(255),
-    city VARCHAR(255),
-    phone VARCHAR(50),
-    opening_hours VARCHAR(255),
-    daily_cake_capacity INT,
-    daily_order_limit INT
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    opening_hours VARCHAR(255) NOT NULL,
+    daily_cake_capacity INT NOT NULL,
+    daily_order_limit INT NOT NULL
 );
 
 -- ============================================================
@@ -131,116 +131,116 @@ CREATE TABLE BRANCH (
 
 CREATE TABLE PRODUCT (
     product_id INT PRIMARY KEY,
-    category_id INT,
-    name VARCHAR(255),
-    description VARCHAR(255),
-    price DECIMAL(10, 2),
-    is_active BOOLEAN,
+    category_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    is_active BOOLEAN NOT NULL,
     FOREIGN KEY (category_id) REFERENCES CATEGORY(category_id)
 );
 
 CREATE TABLE PRODUCT_IMAGE (
      image_id INT PRIMARY KEY,
-     product_id INT,
-     url VARCHAR(255),
-    display_order VARCHAR(50),
+     product_id INT NOT NULL,
+     url VARCHAR(255) NOT NULL,
+    display_order VARCHAR(50) NOT NULL,
     FOREIGN KEY (product_id) REFERENCES PRODUCT(product_id)
 );
 
 CREATE TABLE CUSTOMER_ADDRESS (
-    address_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    customer_id INT,
-    house_number VARCHAR(100),
-    building VARCHAR(255),
-    street VARCHAR(255),
-    city VARCHAR(255),
-    province VARCHAR(255),
-    postal_code VARCHAR(20),
+    address_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    customer_id INT NOT NULL,
+    house_number VARCHAR(100) NOT NULL,
+    building VARCHAR(255) NOT NULL,
+    street VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    province VARCHAR(255) NOT NULL,
+    postal_code VARCHAR(20) NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id)
 );
 
 CREATE TABLE PICKUP_SLOT (
     pickup_slot_id INT PRIMARY KEY,
-    branch_id INT,
-    date DATE,
-    time TIME,
-    capacity INT,
+    branch_id INT NOT NULL,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
+    capacity INT NOT NULL,
     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id)
 );
 
 CREATE TABLE CUSTOMER_ALLERGEN (
-    customer_id INT,
-    allergen_id INT,
+    customer_id INT NOT NULL,
+    allergen_id INT NOT NULL,
     PRIMARY KEY (customer_id, allergen_id),
     FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id),
     FOREIGN KEY (allergen_id) REFERENCES ALLERGEN(allergen_id)
 );
 
 CREATE TABLE INGREDIENT_ALLERGEN (
-    ingredient_id INT,
-    allergen_id INT,
+    ingredient_id INT NOT NULL,
+    allergen_id INT NOT NULL,
     PRIMARY KEY (ingredient_id, allergen_id),
     FOREIGN KEY (ingredient_id) REFERENCES INGREDIENT(ingredient_id),
     FOREIGN KEY (allergen_id) REFERENCES ALLERGEN(allergen_id)
 );
 
 CREATE TABLE SUPPLIER_INGREDIENT (
-    supplier_id INT,
-    ingredient_id INT,
-    unit_price DECIMAL(10, 2),
-    lead_time INT,
-    minimum_order_qty INT,
-    last_updated DATE,
+    supplier_id INT NOT NULL,
+    ingredient_id INT NOT NULL,
+    unit_price DECIMAL(10, 2) NOT NULL,
+    lead_time INT NOT NULL,
+    minimum_order_qty INT NOT NULL,
+    last_updated DATE NOT NULL,
     PRIMARY KEY (supplier_id, ingredient_id),
     FOREIGN KEY (supplier_id) REFERENCES SUPPLIER(supplier_id),
     FOREIGN KEY (ingredient_id) REFERENCES INGREDIENT(ingredient_id)
 );
 
 CREATE TABLE FROSTING_INGREDIENT (
-    frosting_id INT,
-    ingredient_id INT,
-    quantity INT,
+    frosting_id INT NOT NULL,
+    ingredient_id INT NOT NULL,
+    quantity INT NOT NULL,
     PRIMARY KEY (frosting_id, ingredient_id),
     FOREIGN KEY (frosting_id) REFERENCES FROSTING(frosting_id),
     FOREIGN KEY (ingredient_id) REFERENCES INGREDIENT(ingredient_id)
 );
 
 CREATE TABLE CAKE_BASE_INGREDIENT (
-    base_id INT,
-    ingredient_id INT,
-    quantity INT,
+    base_id INT NOT NULL,
+    ingredient_id INT NOT NULL,
+    quantity INT NOT NULL,
     PRIMARY KEY (base_id, ingredient_id),
     FOREIGN KEY (base_id) REFERENCES CAKE_BASE(base_id),
     FOREIGN KEY (ingredient_id) REFERENCES INGREDIENT(ingredient_id)
 );
 
 CREATE TABLE PRODUCT_INGREDIENT (
-    product_id INT,
-    ingredient_id INT,
-    quantity_required DECIMAL(10, 2),
-    unit_of_measure VARCHAR(50),
+    product_id INT NOT NULL,
+    ingredient_id INT NOT NULL,
+    quantity_required DECIMAL(10, 2) NOT NULL,
+    unit_of_measure VARCHAR(50) NOT NULL,
     PRIMARY KEY (product_id, ingredient_id),
     FOREIGN KEY (product_id) REFERENCES PRODUCT(product_id),
     FOREIGN KEY (ingredient_id) REFERENCES INGREDIENT(ingredient_id)
 );
 
 CREATE TABLE PRODUCT_INVENTORY (
-    branch_id INT,
-    product_id INT,
-    name VARCHAR(255),
-    quantity_on_hand INT,
-    is_active BOOLEAN,
+    branch_id INT NOT NULL,
+    product_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    quantity_on_hand INT NOT NULL,
+    is_active BOOLEAN NOT NULL,
     PRIMARY KEY (branch_id, product_id),
     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id),
     FOREIGN KEY (product_id) REFERENCES PRODUCT(product_id)
 );
 
 CREATE TABLE INGREDIENT_INVENTORY (
-    branch_id INT,
-    ingredient_id INT,
-    name VARCHAR(255),
-    quantity_on_hand INT,
-    is_active BOOLEAN,
+    branch_id INT NOT NULL,
+    ingredient_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    quantity_on_hand INT NOT NULL,
+    is_active BOOLEAN NOT NULL,
     PRIMARY KEY (branch_id, ingredient_id),
     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id),
     FOREIGN KEY (ingredient_id) REFERENCES INGREDIENT(ingredient_id)
@@ -250,51 +250,54 @@ CREATE TABLE INGREDIENT_INVENTORY (
 -- ORDERS & FULFILLMENT
 -- ============================================================
 
-CREATE TABLE "ORDER" (
-    order_id INT PRIMARY KEY,
-    customer_id INT,
-    branch_id INT,
-    pickup_slot_id INT,
-    order_date DATE,
-    status VARCHAR(50) CHECK (status IN ('Pending', 'Confirmed', 'In Production', 'Ready', 'Completed', 'Cancelled')),
-    subtotal DECIMAL(10, 2),
-    tax DECIMAL(10, 2),
-    total_amount DECIMAL(10, 2),
-    fulfillment_method VARCHAR(50),
-    shipping_cost DECIMAL(10, 2),
+CREATE TABLE CUSTOMER_ORDER (
+    order_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    customer_id INT NOT NULL,
+    branch_id INT NOT NULL,
+    pickup_slot_id INT NOT NULL,
+    order_date DATE NOT NULL,
+    status VARCHAR(50) NOT NULL CHECK
+        (status IN
+         ('Pending', 'Confirmed', 'In Production', 'Ready', 'Completed', 'Cancelled')
+        ),
+    subtotal DECIMAL(10, 2) NOT NULL,
+    tax DECIMAL(10, 2) NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    fulfillment_method VARCHAR(50) NOT NULL,
+    shipping_cost DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES CUSTOMER(customer_id),
     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id),
     FOREIGN KEY (pickup_slot_id) REFERENCES PICKUP_SLOT(pickup_slot_id)
 );
 
 CREATE TABLE PAYMENT (
-    payment_id INT PRIMARY KEY,
-    order_id INT,
-    payment_method VARCHAR(50),
-    amount DECIMAL(10, 2),
-    paid_at DATE,
-    status VARCHAR(50) CHECK (status IN ('Pending', 'Paid', 'Failed', 'Refunded')),
-    FOREIGN KEY (order_id) REFERENCES "ORDER"(order_id)
+    payment_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    order_id INT NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    paid_at DATE NOT NULL,
+    status VARCHAR(50) NOT NULL CHECK (status IN ('Pending', 'Paid', 'Failed', 'Refunded')),
+    FOREIGN KEY (order_id) REFERENCES CUSTOMER_ORDER (order_id)
 );
 
 CREATE TABLE DELIVERY (
-    delivery_id INT PRIMARY KEY,
-    order_id INT,
-    address_id INT,
-    driver VARCHAR(255),
-    status VARCHAR(50) CHECK (status IN ('Pending', 'Out for Delivery', 'Delivered', 'Failed')),
-    estimated_delivery_time TIME,
-    FOREIGN KEY (order_id) REFERENCES "ORDER"(order_id),
+    delivery_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    order_id INT NOT NULL,
+    address_id INT NOT NULL,
+    driver VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL CHECK (status IN ('Pending', 'Out for Delivery', 'Delivered', 'Failed')),
+    estimated_delivery_time TIME NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES CUSTOMER_ORDER (order_id),
     FOREIGN KEY (address_id) REFERENCES CUSTOMER_ADDRESS(address_id)
 );
 
 CREATE TABLE ORDER_ITEM (
-    order_item_id INT PRIMARY KEY,
+    order_item_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     order_id INT,
     item_type VARCHAR(50),
     quantity INT,
     unit_price DECIMAL(10, 2),
-    FOREIGN KEY (order_id) REFERENCES "ORDER"(order_id)
+    FOREIGN KEY (order_id) REFERENCES CUSTOMER_ORDER (order_id)
 );
 
 CREATE TABLE ORDER_ITEM_PRODUCT (
@@ -317,7 +320,7 @@ CREATE TABLE ORDER_ITEM_CUSTOM_CAKE (
 
 
 CREATE TABLE CUSTOM_CAKE (
-    custom_cake_id INT PRIMARY KEY,
+    custom_cake_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     size_id INT,
     cake_shape_id INT,
     cake_message VARCHAR(255),
