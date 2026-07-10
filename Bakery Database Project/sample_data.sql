@@ -70,12 +70,22 @@ INSERT INTO SUPPLIER (supplier_id, name, contact_name, phone, email, address) VA
     (3, 'Sweet Supply Co.', 'Wyatt Phelps', '02-456-7890', 'contact@sweetsupply.co.th', '12 Silom Rd, Bangkok'),
     (4, 'Vanilla Garden Co.', 'Ramona Huynh', '02-496-7530', 'contact@vanillagarden.co.th', '34 Sukhumvit Rd, Bangkok');
 
+INSERT INTO "user" (email, created_at, password_hash, last_login_at) VALUES
+    ('nicha.b@email.com', '2025-03-12','$2a$12$Z6Zx0IqB6n/eVYxQgV01BOSWi4JXkwKklGnH4ReOCt1LS3moNevkK','2026-07-08 19:30:00'),
+    ('kitti.s@email.com', '2025-05-20', '$2a$12$BQroPhM3u557VjQGblw19unLKvR696191Io6TnBKWonjNv5dXHi0a', '2026-07-08 20:30:00'),
+    ('raquel.r@email.com',  '2025-11-02', '$2a$12$hzDsPobdXxe3Wkw.vhwQ9ecppQbfU/l71Db4NMjUobZVRLRwNVgsq', '2026-07-08 19:31:00'),
+    ('herbet.b@email.com',  '2026-01-15', '$2a$12$o7f4QfRqHvhqSCRodQvvku0SYgwFFs7xo05rOCdcFjbTXjiIZnOLK', '2026-06-08 19:30:00'),
+    ('john.d@email.com',  '2026-01-15', '$2a$12$o7f4QfRqHvhqSCRodQvvku0SYgwFFs7xo05rOCdcFjbTXjiIZnOLK', '2026-06-08 19:30:00'),
+    ('jane.s@email.com',  '2026-01-15', '$2a$12$o7f4QfRqHvhqSCRodQvvku0SYgwFFs7xo05rOCdcFjbTXjiIZnOLK', '2026-06-08 19:30:00'),
+    ('david.b@email.com',  '2026-01-15', '$2a$12$o7f4QfRqHvhqSCRodQvvku0SYgwFFs7xo05rOCdcFjbTXjiIZnOLK', '2026-06-08 19:30:00'),
+    ('Sarah.w@email.com',  '2026-01-15', '$2a$12$o7f4QfRqHvhqSCRodQvvku0SYgwFFs7xo05rOCdcFjbTXjiIZnOLK', '2026-06-08 19:30:00');
 
-INSERT INTO CUSTOMER (first_name, last_name, email, phone, created_at, password_hash, last_login_at) VALUES
-    ( 'Nicha', 'Boonmee', 'nicha.b@email.com', '081-234-5678', '2025-03-12', '$2a$12$Z6Zx0IqB6n/eVYxQgV01BOSWi4JXkwKklGnH4ReOCt1LS3moNevkK', '2026-07-08 19:30:00'),
-    ( 'Kittipong', 'Sirikul', 'kitti.s@email.com', '082-345-6789', '2025-05-20', '$2a$12$BQroPhM3u557VjQGblw19unLKvR696191Io6TnBKWonjNv5dXHi0a', '2026-07-08 20:30:00'),
-    ( 'Raquel', 'Riggs', 'raquel.r@email.com', '083-456-7890', '2025-11-02', '$2a$12$hzDsPobdXxe3Wkw.vhwQ9ecppQbfU/l71Db4NMjUobZVRLRwNVgsq', '2026-07-08 19:31:00'),
-    ( 'Herbert', 'Bradley', 'herbet.b@email.com', '084-567-8901', '2026-01-15', '$2a$12$o7f4QfRqHvhqSCRodQvvku0SYgwFFs7xo05rOCdcFjbTXjiIZnOLK', '2026-06-08 19:30:00');
+
+INSERT INTO CUSTOMER (first_name, last_name,  phone, user_id) VALUES
+    ( 'Nicha', 'Boonmee',  '081-234-5678',1),
+    ( 'Kittipong', 'Sirikul', '082-345-6789',2),
+    ( 'Raquel', 'Riggs',  '083-456-7890',3),
+    ( 'Herbert', 'Bradley',  '084-567-8901',4);
 
 INSERT INTO CATEGORY (category_id, name) VALUES
     (1, 'Birthday Cakes'),
@@ -87,6 +97,12 @@ INSERT INTO BRANCH (branch_id, name, address, city, phone, opening_hours, daily_
     (1, 'Sukhumvit Branch', '188 Sukhumvit Soi 24', 'Bangkok', '02-111-2222', '08:00-20:00', 25, 60),
     (2, 'Silom Branch', '55 Silom Rd', 'Bangkok', '02-222-3333', '09:00-19:00', 15, 40),
     (3, 'Salaya Branch', '24 Salaya-Nakhon Chai Si Road', 'Salaya', '02-222-3333', '09:00-19:00', 20, 50);
+
+INSERT INTO EMPLOYEE (first_name, last_name, phone, branch_id, user_id) VALUES
+    ('John', 'Doe', '081-555-1234', 1,5),
+    ('Jane', 'Smith', '089-555-5678', 3,6),
+    ('David', 'Brown', '087-555-7890', 2,7),
+    ('Sarah', 'Wilson', '084-555-2345', 3,8);
 
 -- ------------------------------------------------------------
 -- First-level dependencies

@@ -33,6 +33,7 @@ DROP TABLE IF EXISTS ADDON CASCADE;
 DROP TABLE IF EXISTS DECORATION CASCADE;
 DROP TABLE IF EXISTS CAKE_SIZE CASCADE;
 DROP TABLE IF EXISTS CAKE_SHAPE CASCADE;
+DROP TABLE IF EXISTS "user" CASCADE ;
 
 -- ============================================================
 -- INDEPENDENT TABLES
@@ -98,13 +99,10 @@ CREATE TABLE SUPPLIER (
     address VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE CUSTOMER (
-    customer_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
+CREATE TABLE "user" (
+    user_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    phone VARCHAR(50) NOT NULL,
     created_at DATE NOT NULL,
     email_verified BOOLEAN DEFAULT FALSE,
     last_login_at TIMESTAMP
@@ -129,6 +127,26 @@ CREATE TABLE BRANCH (
 -- ============================================================
 -- FIRST-LEVEL DEPENDENCIES
 -- ============================================================
+
+CREATE TABLE CUSTOMER (
+    customer_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    user_ID INT NOT NULL,
+    FOREIGN KEY (user_ID) REFERENCES "user"(user_id)
+);
+
+CREATE TABLE EMPLOYEE (
+    employee_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    branch_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (branch_id) REFERENCES branch(branch_id),
+    FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+);
 
 CREATE TABLE PRODUCT (
     product_id INT PRIMARY KEY,
