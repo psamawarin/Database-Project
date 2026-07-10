@@ -13,3 +13,19 @@ Functions list:
 - `finalize_order`: Finalizes an order and updates the inventory.
 - `get_customer_order_history`: Retrieves order history for a specific customer.
 - `get_order_details`: Retrieves detailed information about an order.
+- `add_custom_cake`: Adds a custom cake to the database.
+- `calculate_custom_cake_price`: Calculates the price of a custom cake based on ingredients and preferences.
+- `add_product`: Adds a new product to the database.
+- `deactivate_product`: Deactivates a product from the inventory.
+- `deduct_ingredients_for_product`: Deducts ingredients from the inventory.
+- `get_best_supplier_for_ingredient`: Retrieves the supplier with the highest supply for a specific ingredient.
+- `get_branch_order_queue`: Retrieves the order queue for a specific branch.
+- `get_branch_sales_report`: Generates a sales report for a specific branch.
+- `get_low_stock_products`: Retrieves products with low stock levels.
+- `get_low_stock_ingredients`: Retrieves ingredients with low stock levels.
+- `get_top_selling_products`: Retrieves the top-selling products.
+- `is_pickup_slot_available`: Checks if a pickup slot is available for a specific order.
+- `restock_ingredients`: Restocks ingredients based on supplier demand.
+- `restock_products`: Restocks products based on supplier demand.
+- `update_order_status`: Updates the status of an order.
+- `update_product_price`: Updates the price of a product in the inventory.
