@@ -251,4 +251,4 @@ INSERT INTO PAYMENT (order_id, payment_method, amount, paid_at, status) VALUES
     ( 3, 'Credit Card', 267.50, '2026-07-06', 'Paid');
 
 INSERT INTO DELIVERY ( order_id, address_id, driver, status, estimated_delivery_time) VALUES
-    ( 3, 4, 'Somchai T.', 'Delivered', '15:30:00');
+    ( 3, 3, 'Somchai T.', 'Delivered', '15:30:00');

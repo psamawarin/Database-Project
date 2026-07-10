@@ -231,6 +231,7 @@ CREATE TABLE PRODUCT_INVENTORY (
     name VARCHAR(255) NOT NULL,
     quantity_on_hand INT NOT NULL,
     is_active BOOLEAN NOT NULL,
+    reorder_level INT DEFAULT 5,
     PRIMARY KEY (branch_id, product_id),
     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id),
     FOREIGN KEY (product_id) REFERENCES PRODUCT(product_id)
@@ -242,6 +243,7 @@ CREATE TABLE INGREDIENT_INVENTORY (
     name VARCHAR(255) NOT NULL,
     quantity_on_hand INT NOT NULL,
     is_active BOOLEAN NOT NULL,
+    reorder_level INT DEFAULT 100,
     PRIMARY KEY (branch_id, ingredient_id),
     FOREIGN KEY (branch_id) REFERENCES BRANCH(branch_id),
     FOREIGN KEY (ingredient_id) REFERENCES INGREDIENT(ingredient_id)
