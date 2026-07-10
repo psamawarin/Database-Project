@@ -144,7 +144,7 @@ CREATE TABLE PRODUCT_IMAGE (
      image_id INT PRIMARY KEY,
      product_id INT NOT NULL,
      url VARCHAR(255) NOT NULL,
-    display_order VARCHAR(50) NOT NULL,
+    display_order INT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES PRODUCT(product_id)
 );
 
