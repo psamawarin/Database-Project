@@ -107,7 +107,7 @@ CREATE TABLE CUSTOMER (
     phone VARCHAR(50) NOT NULL,
     created_at DATE NOT NULL,
     email_verified BOOLEAN DEFAULT FALSE,
-    last_login_at TIMESTAMP NOT NULL
+    last_login_at TIMESTAMP
 );
 
 CREATE TABLE CATEGORY (

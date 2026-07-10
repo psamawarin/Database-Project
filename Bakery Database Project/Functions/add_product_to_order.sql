@@ -13,7 +13,7 @@ BEGIN
 
     IF NOT EXISTS(
         SELECT 1
-        FROM "ORDER"
+        FROM customer_order
         WHERE order_id = p_order_id
     ) THEN
         RAISE EXCEPTION 'Order % does not exists', p_order_id;

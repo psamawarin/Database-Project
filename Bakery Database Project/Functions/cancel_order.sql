@@ -7,7 +7,7 @@ DECLARE
 BEGIN
     SELECT status
     INTO v_status
-    FROM "ORDER"
+    FROM customer_order
     WHERE order_id = p_order_id
       AND customer_id = p_customer_id;
 
@@ -19,7 +19,7 @@ BEGIN
         RETURN FALSE;
     END IF;
 
-    UPDATE "ORDER"
+    UPDATE customer_order
     SET status = 'Cancelled'
     WHERE order_id = p_order_id
       AND customer_id = p_customer_id;
