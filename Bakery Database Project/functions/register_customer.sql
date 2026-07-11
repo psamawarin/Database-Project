@@ -13,7 +13,6 @@ BEGIN
     VALUES (LOWER(p_email), p_password_hash, CURRENT_DATE, FALSE, NULL)
     RETURNING user_id INTO v_user_id;
 
-    -- Step 2: create the customer profile linked to that user
     INSERT INTO customer (first_name, last_name, phone, user_id)
     VALUES (p_first_name, p_last_name, p_phone, v_user_id)
     RETURNING customer_id INTO v_customer_id;
@@ -25,3 +24,4 @@ EXCEPTION
         RAISE EXCEPTION 'Email: % is already registered', p_email;
 END;
 $$ LANGUAGE plpgsql;
+
